@@ -20,7 +20,7 @@ import cv2
 import sys
 import os
 from skimage import io          # 0.15.0
-
+import argparse
 
 import display
 import read_data
@@ -36,16 +36,14 @@ def calcTrackErrors(p0,p1,dist):
     snr = dist/length
     
     return length,snr
-
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--path', required=True, help="relative path to the slave and master image")
+    return parser.parse_args()
 if __name__=="__main__":
-    
-#    PATH = r"./data/Mela_kaboud_asc/"
-#    MASTER_MAT = 'master.mat'
-#    KEY1 = 'master_asc_crp'
-#    SLAVE_MAT = 'slave.mat'
-#    KEY2 = 'slave_asc_crp'
-    
-    PATH = r"./data/volcano_des/"
+    Flags = get_args()
+    PATH = Flags.path
+#    PATH = r"./data/volcano_des/"
     MASTER_MAT = 'master.mat'
     KEY1 = 'master_des_crp'
     SLAVE_MAT = 'slave.mat'
