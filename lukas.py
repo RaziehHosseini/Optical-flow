@@ -24,7 +24,7 @@ import argparse
 
 import display
 import read_data
-import preprocess as preproc
+#import preprocess as preproc
 
 sys.path.append('./noiseless_data/')
 
@@ -39,6 +39,7 @@ def calcTrackErrors(p0,p1,dist):
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', required=True, help="relative path to the slave and master image")
+    parser.add_argument('--win_size', required=True, type= int, help="lukas-kanade window size")
     return parser.parse_args()
 if __name__=="__main__":
     Flags = get_args()
@@ -98,8 +99,8 @@ if __name__=="__main__":
 #    corners[:,1] = y
 #    x = np.linspace(0, 1, h)
 #    y = np.linspace(0, 1, w)
-    
-    win_size = (105,105)
+    win = Flags.win_size
+    win_size = (win,win)
     max_level = 1
     criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)
 
