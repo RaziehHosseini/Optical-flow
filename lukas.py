@@ -37,9 +37,9 @@ def calcTrackErrors(p0,p1,dist):
     
     return length,snr
 def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--path', required=True, help="relative path to the slave and master image")
-    parser.add_argument('--win_size', required=True, type= int, help="lukas-kanade window size")
+    parser = argparse.ArgumentParser(description="This is optical flow program using lukas-kanade algorithm from opencv please enter the --path and --win_size")
+    parser.add_argument('-p','--path', required=True, help="relative path to the slave and master image")
+    parser.add_argument('-ws','--win_size', required=True, type= int, help="lukas-kanade window size")
     return parser.parse_args()
 if __name__=="__main__":
     Flags = get_args()
