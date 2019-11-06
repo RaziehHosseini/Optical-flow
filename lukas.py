@@ -33,7 +33,7 @@ def calcTrackErrors(p0,p1,dist):
     length=np.sqrt(length[:,0,0]+length[:,0,1])
     
     #Calculate signal-to-noise ratio
-    snr = dist/length
+    snr = dist#/length
     
     return length,snr
 def get_args():
@@ -88,7 +88,7 @@ if __name__=="__main__":
     # 8 bit image, maxCorners,
     # qualityLevel – Minimum accepted quality of image corners,
     # minDistance – Minimum possible Euclidean distance between the returned corners.
-    point_thre = 12000
+    point_thre = 1200000
     dist_thre = 8
     corners = cv2.goodFeaturesToTrack(my_img_master, point_thre, 0.01,10) 
 #    h, w = np.shape(my_img_master)
@@ -121,6 +121,9 @@ if __name__=="__main__":
                                             None,
                                             **lk_params)
     
+    #Find euclidian pixel distance beween original(corners) and backtracked 
+    #(kp3) points and discard point greater than the threshold. This is 
+    #a way of checking tracking robustness
     dist=(corners-kp3)*(corners-kp3)
     dist=np.sqrt(dist[:,0,0]+dist[:,0,1])            
     tracked=len(dist)
@@ -147,6 +150,7 @@ if __name__=="__main__":
                       '_shitomasi_'+ PATH[7:-1]+'_LK_opticalflow_'+ np.str(lk_params['winSize']))
     corners= corners.reshape(-1,1,2)
     kp2 = kp2.reshape(-1,1,2)
+    
     length,snr=calcTrackErrors(corners,kp2,dist)
     print("signal to noise ratio: ",np.mean(snr))
 
